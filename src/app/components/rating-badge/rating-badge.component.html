@@ -1,15 +1,15 @@
 <div class="flex items-center gap-3">
   <div
-    class="flex rounded items-center justify-center text-center basis-9 w-9 h-9"
+    class="flex h-9 w-9 basis-9 items-center justify-center rounded text-center"
     [ngClass]="{
-      'bg-green-900': ratingScale == RatingEnum.EXCELLENT,
-      'bg-green-700': ratingScale == RatingEnum.VERY_GOOD,
-      'bg-yellow-500': ratingScale == RatingEnum.GOOD,
-      'bg-orange-500': ratingScale == RatingEnum.FAIR,
-      'bg-red-800': ratingScale == RatingEnum.POOR
+      'bg-green-900': ratingScale === RatingEnum.EXCELLENT,
+      'bg-green-700': ratingScale === RatingEnum.VERY_GOOD,
+      'bg-yellow-500': ratingScale === RatingEnum.GOOD,
+      'bg-orange-500': ratingScale === RatingEnum.FAIR,
+      'bg-red-800': ratingScale === RatingEnum.POOR
     }"
   >
-    <span class="text-tui-base-01 font-semibold">{{ rating }}</span>
+    <span class="font-semibold text-tui-base-01">{{ rating }}</span>
   </div>
   <strong [ngSwitch]="ratingScale">
     <ng-container *ngSwitchCase="RatingEnum.EXCELLENT">Excellent</ng-container>

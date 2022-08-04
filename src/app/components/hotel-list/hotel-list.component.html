@@ -1,6 +1,6 @@
 <ng-container *ngIf="vm$ | async as vm">
   <div class="container mx-auto">
-    <div class="flex justify-between mb-4">
+    <div class="mb-4 flex justify-between">
       <!-- TODO: Add spin icon -->
       <button
         tuiIconButton
@@ -8,13 +8,18 @@
         appearance="whiteblock"
         size="l"
         (click)="refreshList()"
+        [disabled]="vm.isFetchingData"
       >
-        <tui-svg class="animate-spin" [src]="'tuiIconRefresh'"></tui-svg>
+        <tui-svg
+          [ngClass]="{ 'animate-spin': vm.isFetchingData }"
+          [src]="'tuiIconRefresh'"
+        ></tui-svg>
       </button>
 
       <tui-select
         [ngModel]="vm.currentCurrency"
         (ngModelChange)="updateCurrency($event)"
+        [disabled]="vm.isFetchingData"
       >
         Currency
         <input tuiTextfield placeholder="Choose a currency" />
@@ -25,12 +30,26 @@
       </tui-select>
     </div>
 
-    <div class="flex flex-col gap-4">
+    <div
+      class="flex flex-col gap-4"
+      *ngIf="!vm.isFetchingData && !!vm.hotels.length; else showMessage"
+    >
       <app-hotel-item
         *ngFor="let hotel of vm.hotels"
         [hotel]="hotel"
         [currency]="vm.currentCurrency"
       ></app-hotel-item>
     </div>
+
+    <ng-template #showMessage>
+      <app-message
+        [imgSrc]="
+          vm.isFetchingData ? 'assets/loader.gif' : 'assets/no-result.png'
+        "
+        [message]="
+          vm.isFetchingData ? 'Finding Your Ideal Hotels!' : 'No Hotels Found'
+        "
+      ></app-message>
+    </ng-template>
   </div>
 </ng-container>

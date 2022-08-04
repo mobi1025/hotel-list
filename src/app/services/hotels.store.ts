@@ -76,17 +76,20 @@ export class HotelsStore extends ComponentStore<HotelsState> {
     (state) => state.isFetchingData
   );
 
-  readonly vm$: Observable<{ hotels: Hotel[]; currentCurrency: CurrencyEnum }> =
-    this.select(
-      this.hotels$,
-      this.currentCurrency$,
-      this.isFetchingData$,
-      (hotels, currentCurrency, isFetchingData) => ({
-        hotels,
-        currentCurrency,
-        isFetchingData,
-      })
-    );
+  readonly vm$: Observable<{
+    hotels: Hotel[];
+    currentCurrency: CurrencyEnum;
+    isFetchingData: boolean;
+  }> = this.select(
+    this.hotels$,
+    this.currentCurrency$,
+    this.isFetchingData$,
+    (hotels, currentCurrency, isFetchingData) => ({
+      hotels,
+      currentCurrency,
+      isFetchingData,
+    })
+  );
 
   ////// Updater //////
   readonly setCurrency = this.updater((state, currency: CurrencyEnum) => ({

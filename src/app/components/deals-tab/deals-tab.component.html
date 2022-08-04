@@ -54,7 +54,13 @@
         </div>
       </div></tui-island
     >
-  </div></ng-container
+  </div>
+  ></ng-container
 >
 
-<ng-template #noDeals> No Deal </ng-template>
+<ng-template #noDeals>
+  <app-message
+    [imgSrc]="'assets/no-result.png'"
+    [message]="'No Deals Found'"
+  ></app-message>
+</ng-template>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { LatLng, latLng } from 'leaflet';
 import { Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import { LocationSearchService } from './location-search.service';
 
 export interface InfoTabState {
@@ -47,6 +47,7 @@ export class InfoTabStore extends ComponentStore<InfoTabState> {
     address: string;
     hotelName: string;
     description: string;
+    isLoadingMap: boolean;
   }> = this.select(
     this.address$,
     this.hotelName$,
@@ -93,6 +94,7 @@ export class InfoTabStore extends ComponentStore<InfoTabState> {
   ////// Effect //////
   readonly getLocationLatLng = this.effect((hotelName$: Observable<string>) => {
     return hotelName$.pipe(
+      filter((hotelName) => !!hotelName),
       tap(() => this.toggleIsLoadingMap(true)),
       switchMap((hotelName) =>
         this.locationSearchService.searchLocation(hotelName).pipe(

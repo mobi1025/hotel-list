@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { latLng, MapOptions, marker, tileLayer } from 'leaflet';
+import { MapOptions, marker, tileLayer } from 'leaflet';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { InfoTabStore } from '../../services/info-tab.store';
@@ -24,17 +24,7 @@ export class InfoTabComponent implements OnInit, OnDestroy {
     this.infoTabStore.setDescription(description);
   }
 
-  mapOptions: MapOptions | undefined = {
-    layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '...',
-      }),
-      marker([35.6276353, 139.7367036]),
-    ],
-    zoom: 18,
-    center: latLng(35.6276353, 139.7367036),
-  };
+  mapOptions?: MapOptions;
 
   vm$ = this.infoTabStore.vm$;
 

@@ -31,6 +31,7 @@ import { DealsTabComponent } from './components/deals-tab/deals-tab.component';
 import { InfoTabComponent } from './components/info-tab/info-tab.component';
 import { RatingBadgeComponent } from './components/rating-badge/rating-badge.component';
 import { BypassSanitizerPipe, ShortLocationPipe } from './pipes';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { BypassSanitizerPipe, ShortLocationPipe } from './pipes';
     HotelPricingComponent,
     InfoTabComponent,
     DealsTabComponent,
+    MessageComponent,
     ShortLocationPipe,
     RoundCurrencyPipe,
     BypassSanitizerPipe,

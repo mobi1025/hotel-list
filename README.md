@@ -28,9 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Tam thoi lam cho pc trc sau do moi lam cho mobile sau => can check responsive
 apply unit test
-làm luôn mấy cái no result
-làm skeleton hoặc loading
 lam2 mấy cái tách component (price, tax, tax list)
 
-no result (list, map, deal)
-loading (list, map)

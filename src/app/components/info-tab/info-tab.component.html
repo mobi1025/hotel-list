@@ -3,14 +3,23 @@
     <tui-svg [src]="'tuiIconGeoLarge'"></tui-svg>
     <span>{{ vm.address }}</span>
   </h4>
-  <ng-container *ngIf="mapOptions">
+  <ng-container *ngIf="!vm.isLoadingMap && mapOptions; else showMessage">
     <!-- TODO: add loading and empty map info -->
     <div
-      class="h-40 rounded-tui-radius-l md:h-80"
+      class="h-56 rounded-tui-radius-l md:h-96"
       leaflet
       [leafletOptions]="mapOptions"
     ></div>
   </ng-container>
+
+  <ng-template #showMessage>
+    <app-message
+      [imgSrc]="
+        vm.isLoadingMap ? 'assets/location-loader.gif' : 'assets/no-result.png'
+      "
+      [message]="vm.isLoadingMap ? 'Finding Location!' : 'Location Not Found'"
+    ></app-message>
+  </ng-template>
   <h4 class="my-4 font-bold">About {{ vm.hotelName }}</h4>
   <tui-island
     ><div [innerHTML]="vm.description | bypassSanitizer"></div

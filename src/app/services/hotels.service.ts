@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CurrencyEnum } from '../enums';
@@ -13,11 +14,11 @@ export class HotelsSerivce {
 
   constructor(private http: HttpClient) {}
 
-  fetchHotels() {
+  fetchHotels(): Observable<HotelInterface[]> {
     return this.http.get<HotelInterface[]>(this.baseUrl);
   }
 
-  fetchHotelPrices(currency: CurrencyEnum) {
+  fetchHotelPrices(currency: CurrencyEnum): Observable<PriceInterface[]> {
     return this.http.get<PriceInterface[]>(`${this.baseUrl}/1/${currency}`);
   }
 }

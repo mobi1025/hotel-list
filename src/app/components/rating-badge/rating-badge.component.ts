@@ -1,5 +1,5 @@
-import { RatingEnum } from './../../enums/rating.enum';
 import { Component, Input } from '@angular/core';
+import { RatingEnum } from './../../enums/rating.enum';
 
 @Component({
   selector: 'app-rating-badge',
@@ -27,11 +27,11 @@ export class RatingBadgeComponent {
     }
   }
 
-  get rating() {
+  get rating(): number {
     return this._rating;
   }
 
-  get ratingScale() {
+  get ratingScale(): RatingEnum {
     return this._ratingScale;
   }
 }

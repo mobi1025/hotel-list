@@ -24,7 +24,7 @@ export class DealsTabComponent implements OnChanges {
 
   deals: DealsInterface[] = [];
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     this.deals = [];
 
     if (this.price) {

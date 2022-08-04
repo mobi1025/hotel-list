@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { LocationDetail } from './../models/location-detail.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -8,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class LocationSearchService {
   constructor(private http: HttpClient) {}
 
-  searchLocation(locationName: string) {
+  searchLocation(locationName: string): Observable<LocationDetail[]> {
     return this.http.get<
       LocationDetail[]
     >(`https://nominatim.openstreetmap.org/search?q=${locationName}&format=jsonv2&limit=1

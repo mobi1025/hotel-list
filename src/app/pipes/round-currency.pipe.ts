@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'roundCurrency',
 })
 export class RoundCurrencyPipe implements PipeTransform {
-  transform(price: number, currency: CurrencyEnum) {
+  transform(price: number, currency: CurrencyEnum): number {
     switch (currency) {
       case CurrencyEnum.USD:
       case CurrencyEnum.SGD:

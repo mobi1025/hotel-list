@@ -27,8 +27,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 Tam thoi lam cho pc trc sau do moi lam cho mobile sau => can check responsive
-papply lint
 apply unit test
 làm luôn mấy cái no result
 làm skeleton hoặc loading
 lam2 mấy cái tách component (price, tax, tax list)
+
+no result (list, map, deal)
+loading (list, map)

@@ -1,15 +1,8 @@
-import { InfoTabStore } from '../../services/info-tab.store';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import {
-  circle,
-  latLng,
-  MapOptions,
-  marker,
-  polygon,
-  tileLayer,
-} from 'leaflet';
+import { latLng, MapOptions, marker, tileLayer } from 'leaflet';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { InfoTabStore } from '../../services/info-tab.store';
 
 @Component({
   selector: 'app-info-tab',

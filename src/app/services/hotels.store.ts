@@ -1,8 +1,7 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { forkJoin, Observable } from 'rxjs';
-import { mergeMapTo, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Hotel, HotelInterface, PriceInterface } from '../models';
 import { CurrencyEnum } from './../enums/currency.enum';
 import { HotelsSerivce } from './hotels.service';
@@ -18,6 +17,7 @@ export interface HotelsState {
   hotelDetailsData: HotelInterface[];
   hotelPriceData: PriceInterface[];
   currentCurrency: CurrencyEnum;
+  isFetchingData: boolean;
 }
 
 @Injectable()
@@ -28,6 +28,7 @@ export class HotelsStore extends ComponentStore<HotelsState> {
       hotelPriceData: [],
       currentCurrency:
         (localStorage.getItem('currency') as CurrencyEnum) ?? CurrencyEnum.USD,
+      isFetchingData: false,
     });
   }
 
@@ -71,11 +72,20 @@ export class HotelsStore extends ComponentStore<HotelsState> {
     }
   );
 
+  private readonly isFetchingData$: Observable<boolean> = this.select(
+    (state) => state.isFetchingData
+  );
+
   readonly vm$: Observable<{ hotels: Hotel[]; currentCurrency: CurrencyEnum }> =
     this.select(
       this.hotels$,
       this.currentCurrency$,
-      (hotels, currentCurrency) => ({ hotels, currentCurrency })
+      this.isFetchingData$,
+      (hotels, currentCurrency, isFetchingData) => ({
+        hotels,
+        currentCurrency,
+        isFetchingData,
+      })
     );
 
   ////// Updater //////
@@ -99,19 +109,32 @@ export class HotelsStore extends ComponentStore<HotelsState> {
     })
   );
 
+  readonly toggleIsFetchingData = this.updater(
+    (state, isFetchingData: boolean) => ({
+      ...state,
+      isFetchingData,
+    })
+  );
+
   ////// Effect //////
   readonly changeCurrency = this.effect(
     (currency$: Observable<CurrencyEnum>) => {
       return currency$.pipe(
         tap((currency) => {
+          this.toggleIsFetchingData(true);
           localStorage.setItem(CURRENCY_LOCAL_STORAGE_KEY, currency);
           this.setCurrency(currency);
         }),
         switchMap((currency) =>
           this.hotelsService.fetchHotelPrices(currency).pipe(
             tapResponse(
-              (hotelPriceData) => this.updateHotelPriceData(hotelPriceData),
-              (error: HttpErrorResponse) => {}
+              (hotelPriceData) => {
+                this.updateHotelPriceData(hotelPriceData);
+                this.toggleIsFetchingData(false);
+              },
+              () => {
+                this.toggleIsFetchingData(false);
+              }
             )
           )
         )
@@ -122,6 +145,7 @@ export class HotelsStore extends ComponentStore<HotelsState> {
   readonly fetchHotelsData = this.effect(
     (refreshClicked$: Observable<void>) => {
       return refreshClicked$.pipe(
+        tap(() => this.toggleIsFetchingData(true)),
         withLatestFrom(this.currentCurrency$),
         switchMap(([, currency]) =>
           forkJoin([
@@ -129,9 +153,13 @@ export class HotelsStore extends ComponentStore<HotelsState> {
             this.hotelsService.fetchHotelPrices(currency),
           ]).pipe(
             tapResponse(
-              ([hotelDetailsData, hotelPriceData]) =>
-                this.updateHotelData({ hotelDetailsData, hotelPriceData }),
-              (error: HttpErrorResponse) => {}
+              ([hotelDetailsData, hotelPriceData]) => {
+                this.updateHotelData({ hotelDetailsData, hotelPriceData });
+                this.toggleIsFetchingData(false);
+              },
+              () => {
+                this.toggleIsFetchingData(false);
+              }
             )
           )
         )

@@ -16,13 +16,13 @@ export class HotelItemComponent {
 
   activeTabIndex = 0;
 
-  toggleExpand(event: Event) {
+  toggleExpand(event: Event): void {
     event.stopPropagation();
 
     this.expanded = !this.expanded;
   }
 
-  viewDeal() {
+  viewDeal(): void {
     window.open(`https://www.google.com/search?q=${this.hotel.name}`);
   }
 }

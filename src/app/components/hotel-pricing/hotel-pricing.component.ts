@@ -1,5 +1,5 @@
-import { CurrencyEnum } from 'src/app/enums';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CurrencyEnum } from 'src/app/enums';
 import { PriceInterface } from 'src/app/models';
 
 @Component({
@@ -35,23 +35,23 @@ export class HotelPricingComponent {
     }
   }
 
+  get hotelPrice(): Omit<PriceInterface, 'id'> | undefined {
+    return this._hotelPrice;
+  }
+
   @Input() currency!: CurrencyEnum;
 
   @Output() viewDealClicked = new EventEmitter<void>();
 
-  get hotelPrice() {
-    return this._hotelPrice;
-  }
-
-  get savePercentage() {
+  get savePercentage(): number | undefined {
     return this._savePercentage;
   }
 
-  get highestPrice() {
+  get highestPrice(): number | undefined {
     return this._highestPrice;
   }
 
-  handleViewDealClicked(event: Event) {
+  handleViewDealClicked(event: Event): void {
     event.stopPropagation();
     this.viewDealClicked.emit();
   }

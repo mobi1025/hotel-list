@@ -1,25 +1,22 @@
-import { LocationSearchService } from './location-search.service';
-import { LatLng, latLng } from 'leaflet';
-import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Observable, forkJoin } from 'rxjs';
-import { tap, switchMap, mergeMapTo } from 'rxjs/operators';
-import { CurrencyEnum } from '../enums';
-import { Hotel, PriceInterface } from '../models';
-import { HotelData } from './hotels.store';
+import { ComponentStore, tapResponse } from '@ngrx/component-store';
+import { LatLng, latLng } from 'leaflet';
+import { Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import { LocationSearchService } from './location-search.service';
 
 export interface InfoTabState {
   address: string;
   hotelName: string;
   description: string;
   locationLatLng?: LatLng;
+  isLoadingMap: boolean;
 }
 
 @Injectable()
 export class InfoTabStore extends ComponentStore<InfoTabState> {
   constructor(private locationSearchService: LocationSearchService) {
-    super({ address: '', hotelName: '', description: '' });
+    super({ address: '', hotelName: '', description: '', isLoadingMap: false });
 
     // Fetch hotel location when hotel name changed
     this.getLocationLatLng(this.hotelName$);
@@ -42,6 +39,10 @@ export class InfoTabStore extends ComponentStore<InfoTabState> {
     (state) => state.locationLatLng
   );
 
+  private readonly isLoadingMap$: Observable<boolean> = this.select(
+    (state) => state.isLoadingMap
+  );
+
   readonly vm$: Observable<{
     address: string;
     hotelName: string;
@@ -50,7 +51,13 @@ export class InfoTabStore extends ComponentStore<InfoTabState> {
     this.address$,
     this.hotelName$,
     this.description$,
-    (address, hotelName, description) => ({ address, hotelName, description })
+    this.isLoadingMap$,
+    (address, hotelName, description, isLoadingMap) => ({
+      address,
+      hotelName,
+      description,
+      isLoadingMap,
+    })
   );
 
   ////// Updater //////
@@ -69,6 +76,13 @@ export class InfoTabStore extends ComponentStore<InfoTabState> {
     description,
   }));
 
+  readonly toggleIsLoadingMap = this.updater(
+    (state, isLoadingMap: boolean) => ({
+      ...state,
+      isLoadingMap,
+    })
+  );
+
   readonly setLocationLatLng = this.updater(
     (state, locationLatLng: LatLng | undefined) => ({
       ...state,
@@ -79,10 +93,11 @@ export class InfoTabStore extends ComponentStore<InfoTabState> {
   ////// Effect //////
   readonly getLocationLatLng = this.effect((hotelName$: Observable<string>) => {
     return hotelName$.pipe(
+      tap(() => this.toggleIsLoadingMap(true)),
       switchMap((hotelName) =>
         this.locationSearchService.searchLocation(hotelName).pipe(
           tapResponse(
-            (locationDetails) =>
+            (locationDetails) => {
               this.setLocationLatLng(
                 locationDetails.length
                   ? latLng(
@@ -90,9 +105,12 @@ export class InfoTabStore extends ComponentStore<InfoTabState> {
                       Number(locationDetails[0].lon)
                     )
                   : undefined
-              ),
+              );
+              this.toggleIsLoadingMap(false);
+            },
             () => {
               this.setLocationLatLng(undefined);
+              this.toggleIsLoadingMap(false);
             }
           )
         )

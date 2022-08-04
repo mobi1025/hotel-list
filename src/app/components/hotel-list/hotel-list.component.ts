@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { CurrencyEnum } from 'src/app/enums';
 import { HotelsStore } from 'src/app/services';
 
@@ -25,11 +24,11 @@ export class HotelListComponent implements OnInit {
     this.hotelsStore.fetchHotelsData();
   }
 
-  updateCurrency(currency: CurrencyEnum) {
+  updateCurrency(currency: CurrencyEnum): void {
     this.hotelsStore.changeCurrency(currency);
   }
 
-  refreshList() {
+  refreshList(): void {
     this.hotelsStore.fetchHotelsData();
   }
 }

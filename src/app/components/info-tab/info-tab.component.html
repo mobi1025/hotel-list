@@ -1,0 +1,18 @@
+<ng-container *ngIf="vm$ | async as vm"
+  ><h4 class="mb-4 flex gap-2 font-bold">
+    <tui-svg [src]="'tuiIconGeoLarge'"></tui-svg>
+    <span>{{ vm.address }}</span>
+  </h4>
+  <ng-container *ngIf="mapOptions">
+    <!-- TODO: add loading and empty map info -->
+    <div
+      class="h-40 rounded-tui-radius-l md:h-80"
+      leaflet
+      [leafletOptions]="mapOptions"
+    ></div>
+  </ng-container>
+  <h4 class="my-4 font-bold">About {{ vm.hotelName }}</h4>
+  <tui-island
+    ><div [innerHTML]="vm.description | bypassSanitizer"></div
+  ></tui-island>
+</ng-container>

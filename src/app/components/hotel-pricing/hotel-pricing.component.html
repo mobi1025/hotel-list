@@ -1,0 +1,98 @@
+<div
+  class="flex h-full flex-col items-start gap-1 p-3"
+  [ngClass]="{
+    'justify-end text-left': !!hotelPrice,
+    'justify-center text-center': !hotelPrice
+  }"
+>
+  <ng-container *ngIf="hotelPrice; else noRate">
+    <!-- Most Expensive Price -->
+    <p
+      *ngIf="highestPrice"
+      class="strikethrough relative text-lg text-tui-text-03 line-clamp-1"
+      tuiHint="{{
+        highestPrice
+          | roundCurrency: currency
+          | currency: currency:'symbol':'1.0-0'
+      }}"
+      tuiHintDirection="left"
+    >
+      {{
+        highestPrice
+          | roundCurrency: currency
+          | currency: currency:"symbol":"1.0-0"
+      }}
+    </p>
+
+    <!-- Price -->
+    <h4
+      class="text-xl font-semibold line-clamp-1"
+      tuiHint="{{
+        hotelPrice.price
+          | roundCurrency: currency
+          | currency: currency:'symbol':'1.0-0'
+      }}"
+      tuiHintDirection="left"
+    >
+      {{
+        hotelPrice.price
+          | roundCurrency: currency
+          | currency: currency:"symbol":"1.0-0"
+      }}
+    </h4>
+
+    <!-- Save Percentage -->
+    <div
+      *ngIf="savePercentage"
+      class="flex items-center rounded border border-solid border-green-600 text-sm"
+    >
+      <span class="p-1 text-green-600">Save</span>
+      <span class="bg-green-600 p-1 text-white">{{
+        savePercentage | percent
+      }}</span>
+    </div>
+
+    <!-- Taxes and fees -->
+    <div class="flex items-center" *ngIf="hotelPrice!.taxes_and_fees">
+      <span class="mr-1 text-xs text-tui-text-03">inclued taxes and fees</span>
+      <tui-tooltip [content]="taxesAndFees" [direction]="'left'"></tui-tooltip>
+    </div>
+
+    <!-- Deal button -->
+    <button
+      class="w-full"
+      tuiButton
+      type="button"
+      size="m"
+      appearance="accent"
+      (click)="handleViewDealClicked($event)"
+    >
+      View Deal
+    </button>
+  </ng-container>
+
+  <ng-template #noRate>
+    <h4 class="text-lg font-semibold">Rates unavailable</h4>
+  </ng-template>
+</div>
+
+<ng-template #taxesAndFees
+  ><ul class="tui-list taxes-and-fees-list">
+    <li class="tui-list__item">
+      Taxes:
+      {{
+        hotelPrice!.taxes_and_fees!.tax
+          | roundCurrency: currency
+          | currency: currency:"symbol":"1.0-0"
+      }}
+    </li>
+    <li class="tui-list__item">
+      Fees:
+      {{
+        hotelPrice!.taxes_and_fees!.hotel_fees
+          | roundCurrency: currency
+          | currency: currency:"symbol":"1.0-0"
+      }}
+    </li>
+  </ul>
+</ng-template>

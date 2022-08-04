@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+// TODO: check for tui-hint-box color
+.taxes-and-fees-list {
+  .tui-list__item {
+    color: var(--tui-base-01);
+
+    &:before {
+      background: var(--tui-support-08);
+    }
+  }
+}

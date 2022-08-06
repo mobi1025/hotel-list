@@ -20,9 +20,14 @@ export class HotelItemComponent {
     event.stopPropagation();
 
     this.expanded = !this.expanded;
+
+    if (this.expanded) {
+      this.activeTabIndex = 0;
+    }
   }
 
   viewDeal(): void {
-    window.open(`https://www.google.com/search?q=${this.hotel.name}`);
+    this.activeTabIndex = 1;
+    this.expanded = true;
   }
 }

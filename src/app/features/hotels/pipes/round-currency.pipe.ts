@@ -1,5 +1,5 @@
-import { CurrencyEnum } from './../enums/currency.enum';
 import { Pipe, PipeTransform } from '@angular/core';
+import { CurrencyEnum } from '../enums';
 
 @Pipe({
   name: 'roundCurrency',

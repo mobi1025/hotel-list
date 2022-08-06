@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { forkJoin, Observable } from 'rxjs';
-import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { Hotel, HotelInterface, PriceInterface } from '../models';
-import { CurrencyEnum } from './../enums/currency.enum';
-import { HotelsSerivce } from './hotels.service';
+import { Observable, forkJoin } from 'rxjs';
+import { tap, switchMap, withLatestFrom } from 'rxjs/operators';
+import { CurrencyEnum } from '../../../enums';
+import { HotelInterface, PriceInterface, Hotel } from '../../../models';
+import { HotelsSerivce } from '../../../services';
 
 const CURRENCY_LOCAL_STORAGE_KEY = 'currency';
 

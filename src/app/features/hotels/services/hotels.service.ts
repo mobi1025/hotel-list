@@ -1,9 +1,8 @@
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CurrencyEnum } from '../enums';
-import { PriceInterface } from '../models';
-import { HotelInterface } from './../models/hotel.model';
+import { HotelInterface, PriceInterface } from '../models';
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CurrencyEnum } from 'src/app/enums';
-import { PriceInterface } from 'src/app/models';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CurrencyEnum } from '../../enums';
+import { PriceInterface } from '../../models';
 
 @Component({
   selector: 'app-hotel-pricing',

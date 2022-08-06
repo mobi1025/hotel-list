@@ -1,6 +1,6 @@
-import { CurrencyEnum } from 'src/app/enums';
-import { CompetitorPrices, TaxInterface } from './../../models/price.model';
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
+import { CurrencyEnum } from '../../enums';
+import { TaxInterface, CompetitorPrices } from '../../models';
 
 interface DealsInterface {
   name: string;

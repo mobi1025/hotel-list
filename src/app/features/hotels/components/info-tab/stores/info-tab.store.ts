@@ -3,7 +3,7 @@ import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { LatLng, latLng } from 'leaflet';
 import { Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
-import { LocationSearchService } from './location-search.service';
+import { LocationSearchService } from '../../../services/location-search.service';
 
 export interface InfoTabState {
   address: string;

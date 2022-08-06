@@ -1,6 +1,6 @@
-import { Hotel } from './../../models/hotel.model';
 import { Component, Input } from '@angular/core';
-import { CurrencyEnum } from 'src/app/enums';
+import { CurrencyEnum } from '../../enums';
+import { Hotel } from '../../models';
 
 @Component({
   selector: 'app-hotel-item',

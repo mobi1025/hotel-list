@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrencyEnum } from 'src/app/enums';
-import { HotelsStore } from 'src/app/services';
+import { CurrencyEnum } from '../../enums';
+import { HotelsStore } from './stores/hotels.store';
 
 @Component({
   selector: 'app-hotel-list',
   templateUrl: 'hotel-list.component.html',
-  styleUrls: ['hotel-list.component.scss'],
   providers: [HotelsStore],
 })
 export class HotelListComponent implements OnInit {

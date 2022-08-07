@@ -6,7 +6,7 @@ import { CurrencyEnum } from '../../../enums';
 import { HotelInterface, PriceInterface, Hotel } from '../../../models';
 import { HotelsSerivce } from '../../../services';
 
-const CURRENCY_LOCAL_STORAGE_KEY = 'currency';
+export const CURRENCY_LOCAL_STORAGE_KEY = 'currency';
 
 export type HotelData = {
   hotelDetailsData: HotelInterface[];
@@ -63,7 +63,7 @@ export class HotelsStore extends ComponentStore<HotelsState> {
 
         if (hotelPrice && hotelPrice.price) {
           hotels.unshift({ ...hotelDetail, hotelPrice: { ...hotelPrice } });
-        } else if (!hotelPrice) {
+        } else {
           hotels.push({ ...hotelDetail });
         }
 
@@ -92,19 +92,21 @@ export class HotelsStore extends ComponentStore<HotelsState> {
   );
 
   ////// Updater //////
-  readonly setCurrency = this.updater((state, currency: CurrencyEnum) => ({
-    ...state,
-    currentCurrency: currency,
-  }));
+  private readonly setCurrency = this.updater(
+    (state, currency: CurrencyEnum) => ({
+      ...state,
+      currentCurrency: currency,
+    })
+  );
 
-  readonly updateHotelPriceData = this.updater(
+  private readonly updateHotelPriceData = this.updater(
     (state, hotelPriceData: PriceInterface[]) => ({
       ...state,
       hotelPriceData,
     })
   );
 
-  readonly updateHotelData = this.updater(
+  private readonly updateHotelData = this.updater(
     (state, { hotelDetailsData, hotelPriceData }: HotelData) => ({
       ...state,
       hotelDetailsData,
@@ -112,7 +114,7 @@ export class HotelsStore extends ComponentStore<HotelsState> {
     })
   );
 
-  readonly toggleIsFetchingData = this.updater(
+  private readonly toggleIsFetchingData = this.updater(
     (state, isFetchingData: boolean) => ({
       ...state,
       isFetchingData,

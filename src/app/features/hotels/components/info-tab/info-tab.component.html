@@ -4,9 +4,8 @@
     <span>{{ vm.address }}</span>
   </h4>
   <ng-container *ngIf="!vm.isLoadingMap && mapOptions; else showMessage">
-    <!-- TODO: add loading and empty map info -->
     <div
-      class="h-56 rounded-tui-radius-l md:h-96"
+      class="h-56 rounded-tui-radius-l md:h-98"
       leaflet
       [leafletOptions]="mapOptions"
     ></div>

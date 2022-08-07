@@ -130,6 +130,9 @@ module.exports = {
       transitionProperty: {
         "translate-shadow": "transform, box-shadow",
       },
+      spacing: {
+        98: "26rem",
+      },
     },
   },
   variants: {

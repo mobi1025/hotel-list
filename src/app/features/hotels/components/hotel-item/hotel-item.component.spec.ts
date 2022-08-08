@@ -42,7 +42,6 @@ describe('HotelItemComponent', () => {
   let component: HotelItemComponent;
   let fixture: ComponentFixture<HotelItemComponent>;
   let debugElement: DebugElement;
-  const shortLocationPipe = new ShortLocationPipe();
   const selectedCurrency = CurrencyEnum.SGD;
   const hotelItem: Hotel = {
     id: 1,

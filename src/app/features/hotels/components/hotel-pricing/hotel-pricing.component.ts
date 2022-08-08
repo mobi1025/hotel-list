@@ -20,13 +20,14 @@ export class HotelPricingComponent {
     if (hotelPrice?.competitors) {
       // Find highest price
       const highestPrice = Object.entries(hotelPrice.competitors).reduce(
-        (highestPrice: number | undefined, [, competiorPrice]) =>
-          competiorPrice > hotelPrice.price ? competiorPrice : highestPrice,
-        undefined
+        (highestPrice: number, [, competiorPrice]) => {
+          return competiorPrice > highestPrice ? competiorPrice : highestPrice;
+        },
+        hotelPrice.price
       );
 
       // Calculate saving
-      if (highestPrice) {
+      if (highestPrice != hotelPrice.price) {
         this._highestPrice = highestPrice;
 
         this._savePercentage =

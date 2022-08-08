@@ -2,7 +2,7 @@ import { Component, OnChanges, Input } from '@angular/core';
 import { CurrencyEnum } from '../../enums';
 import { TaxInterface, CompetitorPrices } from '../../models';
 
-interface DealsInterface {
+export interface DealsInterface {
   name: string;
   price: number;
   isOurPrice: boolean;
